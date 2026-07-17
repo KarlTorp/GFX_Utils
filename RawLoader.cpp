@@ -210,9 +210,12 @@ bool RawLoader::rawLoad(const char *filename, uint16_t *buf, uint32_t bufPixels,
 // Sends a buffer previously filled by rawLoad() to the display via DMA.
 // ---------------------------------------------------------------------------
 void RawLoader::rawDisplayBuffer(uint8_t x, uint16_t y, uint16_t w, uint16_t h,
-                                  uint16_t *buf)
+                                  uint16_t *buf, mode_t mode)
 {
   if (!buf || w == 0 || h == 0) return;
+  if (mode != mode_t::color) {
+    applyMode(buf, (uint32_t)w * h, mode);
+  }
   mTFT.startWrite();
   mTFT.setAddrWindow(x, y, w, h);
   mTFT.pushPixelsDMA(buf, (uint32_t)w * h);

@@ -45,8 +45,9 @@ public:
                uint16_t &outW, uint16_t &outH);
 
   // Display a buffer previously filled by rawLoad() using a single DMA transfer.
+  // A non-color mode recolors the buffer in place (grayscale/shade) first.
   void rawDisplayBuffer(uint8_t x, uint16_t y, uint16_t w, uint16_t h,
-                        uint16_t *buf);
+                        uint16_t *buf, mode_t mode = mode_t::color);
 
   void setServiceCallback(void (*serviceCallback)()) {
     mServiceCallback = serviceCallback;
